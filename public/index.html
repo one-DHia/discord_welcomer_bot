@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Welcomer - Configuration Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="brand">
+            <div class="brand-logo">
+                <svg viewBox="0 0 127.14 96.36">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36c8-10.83,12.78-22.44,14.65-34.59a72.48,72.48,0,0,1-11.45-5.46c.92-.68,1.82-1.39,2.68-2.12A75.14,75.14,0,0,0,91,54.19c.86.73,1.76,1.44,2.68,2.12a72.48,72.48,0,0,1-11.45,5.46c1.87,12.15,6.68,23.76,14.65,34.59a105.73,105.73,0,0,0,31-18.83C129.56,50.77,123.38,27.82,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.9,46,53.9,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.14,46,96.14,53,91,65.69,84.69,65.69Z"/>
+                </svg>
+            </div>
+            <h1>Discord Welcomer</h1>
+        </div>
+        <div class="user-badge">
+            <span style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Connecté en tant que <strong style="color: white;">Admin</strong></span>
+            <button class="btn btn-secondary btn-logout" id="logoutBtn">
+                Déconnexion
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="dashboard-container">
+        <!-- Settings Panel -->
+        <section class="glass-card">
+            <h2 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Configuration
+            </h2>
+
+            <div class="switch-container">
+                <div>
+                    <div class="switch-label">Activer le module Welcomer</div>
+                    <div class="switch-subtext">Activer ou désactiver l'envoi de messages de bienvenue</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="welcomeEnabled" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Server Selector -->
+            <div class="form-group">
+                <label class="form-label" for="guildSelect">Serveur Discord</label>
+                <div class="select-wrapper">
+                    <select id="guildSelect">
+                        <option value="">Chargement des serveurs...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Channel Selector -->
+            <div class="form-group">
+                <label class="form-label" for="channelSelect">Salon de Réception</label>
+                <div class="select-wrapper">
+                    <select id="channelSelect" disabled>
+                        <option value="">Sélectionnez un serveur d'abord</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Text Template -->
+            <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label class="form-label" for="messageTemplate" style="margin-bottom: 0;">Message de Bienvenue (Discord Chat)</label>
+                    <button class="btn btn-secondary" id="aiAssistBtn" style="padding: 6px 12px; font-size: 12px; font-family: var(--font-outfit); width: auto; font-weight: 600; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(114, 137, 218, 0.1); border: 1px solid rgba(114, 137, 218, 0.3); color: #fff;" title="Générer un template créatif avec Mistral AI" disabled>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7289da" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+                        Assistant IA
+                    </button>
+                </div>
+                <textarea class="form-input" id="messageTemplate" rows="3" placeholder="Ex: Bienvenue {user} sur {guild}! Passe un bon moment avec nous! 🎉" style="resize: vertical;"></textarea>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+                    Balises disponibles: <strong style="color: var(--accent-purple);">{user}</strong> (mention du membre), <strong style="color: var(--accent-purple);">{tag}</strong> (nom#tag), <strong style="color: var(--accent-purple);">{guild}</strong> (nom du serveur), <strong style="color: var(--accent-purple);">{count}</strong> (nombre total de membres)
+                </div>
+            </div>
+
+            <!-- Card Title & Subtitle Customization -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="form-label" for="cardTitle">Titre sur la carte</label>
+                    <input class="form-input" type="text" id="cardTitle" placeholder="Ex: BIENVENUE">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="cardSubtitle">Sous-titre sur la carte</label>
+                    <input class="form-input" type="text" id="cardSubtitle" placeholder="Ex: Membre n°{count}">
+                </div>
+            </div>
+
+            <!-- Custom background image upload -->
+            <div class="form-group">
+                <label class="form-label">Image de fond de la carte</label>
+                <div class="upload-zone" id="dropZone">
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <svg class="upload-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <div class="upload-text">Glissez-déposez une image ou <span>cliquez pour choisir</span></div>
+                    <div class="upload-hint">Recommandé : 900x400 pixels (JPEG, PNG, WEBP), Max 5Mo</div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label" style="font-size: 11px;" for="bgUrl">Ou collez l'URL directe d'une image</label>
+                    <input class="form-input" type="text" id="bgUrl" placeholder="https://exemple.com/background.jpg" style="padding: 10px 12px; font-size: 13px;">
+                </div>
+            </div>
+
+            <!-- Custom Text Color -->
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label class="form-label">Couleur du texte de la carte</label>
+                <div class="color-picker-container">
+                    <div class="color-input-wrapper">
+                        <input type="color" class="color-picker-input" id="textColorPicker" value="#ffffff">
+                    </div>
+                    <input type="text" class="color-hex-text" id="textColorHex" value="#FFFFFF" maxlength="7">
+                    <span style="font-size: 12px; color: var(--text-muted);">S'applique au nom du membre dessiné sur la carte</span>
+                </div>
+            </div>
+
+            <!-- Mistral AI Integration Panel -->
+            <div class="ai-section-container" style="margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--border-color); margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">🧠</span>
+                        <div>
+                            <h3 style="font-family: var(--font-outfit); font-size: 16px; font-weight: 600; color: white;">Intégration Mistral AI</h3>
+                            <p style="font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 2px;">Générez des messages d'accueil dynamiques personnalisés par l'IA</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="aiEnabled">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div id="aiConfigFields" style="display: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 20px;">
+                    <!-- Prompt Customization -->
+                    <div class="form-group">
+                        <label class="form-label" for="aiPrompt">Consignes de personnalité / Rôle de l'IA</label>
+                        <textarea class="form-input" id="aiPrompt" rows="3" placeholder="Ex: Accueille le membre {user} sur le serveur {guild} en incarnant un capitaine pirate chaleureux. Fais une blague courte et utilise des émojis de pirates." style="resize: vertical; font-size: 13.5px;"></textarea>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+                            Décrivez le style d'écriture ou le personnage que l'IA doit incarner. Balises supportées : <strong style="color: var(--accent-purple);">{user}</strong>, <strong style="color: var(--accent-purple);">{tag}</strong>, <strong style="color: var(--accent-purple);">{guild}</strong>, <strong style="color: var(--accent-purple);">{count}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Model Selector -->
+                    <div class="form-group">
+                        <label class="form-label" for="aiModel">Modèle de langage Mistral</label>
+                        <div class="select-wrapper">
+                            <select id="aiModel" style="font-size: 13.5px; padding: 12px 14px;">
+                                <option value="open-mistral-7b">open-mistral-7b (Très rapide et économique)</option>
+                                <option value="mistral-tiny">mistral-tiny (Modèle léger de base)</option>
+                                <option value="mistral-small-latest">mistral-small-latest (Créatif, équilibré et réactif)</option>
+                                <option value="mistral-large-latest">mistral-large-latest (Ultra premium, hautement personnalisé)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(155, 93, 229, 0.08); border: 1px dashed rgba(155, 93, 229, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 20px; font-size: 12px; color: var(--text-secondary); line-height: 1.5; display: flex; gap: 10px; align-items: flex-start;">
+                        <span style="font-size: 16px; color: var(--accent-neon);">💡</span>
+                        <span>Lorsque l'IA est activée, le template de message textuel ci-dessus sera ignoré lors des accueils au profit d'un texte unique généré en temps réel par Mistral ! La carte graphique (image) restera dessinée avec le style de fond et de couleur configurés.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-secondary" id="testCardBtn" style="flex: 1;" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Tester en direct
+                </button>
+                <button class="btn btn-success" id="saveConfigBtn" style="flex: 1.5;" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Sauvegarder
+                </button>
+            </div>
+        </section>
+
+        <!-- Live Preview Panel -->
+        <section class="preview-panel">
+            <div class="glass-card" style="flex-grow: 1;">
+                <h2 class="panel-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    Aperçu en Temps Réel
+                </h2>
+
+                <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                    Voici à quoi ressemblera le message de bienvenue envoyé sur Discord :
+                </div>
+
+                <div class="discord-preview-container">
+                    <div class="discord-preview-header">
+                        <div class="discord-dot dot-red"></div>
+                        <div class="discord-dot dot-yellow"></div>
+                        <div class="discord-dot dot-green"></div>
+                        <span class="discord-preview-title"># salon-reception (Aperçu)</span>
+                    </div>
+
+                    <div class="discord-chat-area">
+                        <div class="bot-avatar">W</div>
+                        <div class="discord-message-content">
+                            <div class="bot-name-wrapper">
+                                <span class="bot-name">Welcomer Bot</span>
+                                <span class="bot-tag">Bot</span>
+                                <span class="msg-timestamp">Aujourd'hui à 18:00</span>
+                            </div>
+                            
+                            <!-- Discord message welcome text preview -->
+                            <div class="welcome-text-msg" id="previewTextMsg">Bienvenue @NouveauMembre sur notre serveur ! 🎉</div>
+                            
+                            <!-- Dynamic canvas-like welcome card render -->
+                            <div class="card-canvas-container">
+                                <div class="card-canvas-bg" id="previewCardBg" style="background-image: linear-gradient(135deg, #1e1f22 0%, #2b2d31 100%);"></div>
+                                <div class="card-canvas-overlay"></div>
+                                <div class="card-canvas-content">
+                                    <div class="member-avatar"></div>
+                                    <div class="card-welcome-title" id="previewCardTitle">BIENVENUE</div>
+                                    <div class="card-member-name" id="previewCardMemberName" style="color: #ffffff;">NouveauMembre#1234</div>
+                                    <div class="card-member-subtitle" id="previewCardSubtitle" style="font-size: 13px; color: #a3a6b5; margin-top: 4px;">Membre n°42</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; border-radius: 10px; background: rgba(114, 137, 218, 0.08); border: 1px solid rgba(114, 137, 218, 0.15); font-size: 13px; line-height: 1.5; color: var(--text-secondary);">
+                    💡 <strong>Astuce :</strong> Uploadez une image de fond sombre et contrastée pour faire ressortir l'avatar et le nom du membre !
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
